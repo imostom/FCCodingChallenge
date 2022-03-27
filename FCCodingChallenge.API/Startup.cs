@@ -46,11 +46,13 @@ namespace FCCodingChallenge.API
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
 
             services.AddTransient<RemoteDetails, RemoteDetails>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSwaggerGen(c =>
             {
+                c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FCCodingChallenge.API", Version = "v1" });
             });
         }

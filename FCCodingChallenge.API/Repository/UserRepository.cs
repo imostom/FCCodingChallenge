@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using FCCodingChallenge.API.Data.Models;
 using FCCodingChallenge.API.Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -39,37 +40,73 @@ namespace FCCodingChallenge.API.Repository
             return response;
         }
 
-        public async Task<UserVM> GetUser(string email)
+        public async Task<User> GetUser(string email)
         {
-            var queryString = @"SELECT * FROM [User] WITH(NOLOCK) WHERE Email=@Email AND IsDeleted = @IsDeleted";
+            var queryString = @"select u.Id, u.Firstname, u.Lastname, u.Email, u.Phone, u.Nationality, u.Gender, u.DateOfBirth, r.[Name] as [Role]
+                from [User] AS u
+                LEFT JOIN [UserRoles] as ur
+                ON u.Id = ur.UserId
+                LEFT JOIN [Roles] AS r
+                ON ur.RoleId = r.Id
+                WHERE u.Email = @Email
+                AND u.IsDeleted=@IsDeleted";
 
             var dbPara = new DynamicParameters();
             dbPara.Add("Email", email);
             dbPara.Add("IsDeleted", false);
 
-            var response = await _dapperRepository.Get<UserVM>(queryString, dbPara, commandType: CommandType.Text);
+            var response = await _dapperRepository.Get<User>(queryString, dbPara, commandType: CommandType.Text);
+
+            return response;
+        }
+
+        public async Task<List<User>> GetUserByPhone(string phone)
+        {
+            var queryString = @"select u.Id, u.Firstname, u.Lastname, u.Email, u.Phone, u.Nationality, u.Gender, u.DateOfBirth, r.[Name] as [Role]
+                from [User] AS u
+                LEFT JOIN [UserRoles] as ur
+                ON u.Id = ur.UserId
+                LEFT JOIN [Roles] AS r
+                ON ur.RoleId = r.Id
+                WHERE u.Phone = @Phone
+                AND u.IsDeleted=@IsDeleted";
+
+            var dbPara = new DynamicParameters();
+            dbPara.Add("Email", phone);
+            dbPara.Add("IsDeleted", false);
+
+            var response = await _dapperRepository.GetAll<User>(queryString, dbPara, commandType: CommandType.Text);
 
             return response;
         }
 
         public async Task<List<UserVM>> GetUsers()
         {
-            var queryString = @"SELECT * FROM [User] WITH(NOLOCK) WHERE IsDeleted = @IsDeleted";
+            //var queryString = @"SELECT * FROM [User] WITH(NOLOCK) WHERE IsDeleted = @IsDeleted";
+
+            var queryString = @"select u.Id, u.Firstname, u.Lastname, u.Email, u.Phone, u.Nationality, u.Gender, u.DateOfBirth, r.[Name] as [Role]
+                from [User] AS u
+                LEFT JOIN [UserRoles] as ur
+                ON u.Id = ur.UserId
+                LEFT JOIN [Roles] AS r
+                ON ur.RoleId = r.Id
+                WHERE u.IsDeleted=@IsDeleted";
 
             var dbPara = new DynamicParameters();
             dbPara.Add("IsDeleted", false);
 
-            var response = await _dapperRepository.Get<List<UserVM>>(queryString, dbPara, commandType: CommandType.Text);
+            var response = await _dapperRepository.GetAll<UserVM>(queryString, dbPara, commandType: CommandType.Text);
 
             return response;
         }
 
-        public async Task<UserVM> UpdateUser(UserVM userVM)
+        public async Task<long> UpdateUser(UserVM userVM, long userId)
         {
-            var queryString = @"UPDATE [User] OUTPUT updated.Id set Firstname=@Firstname, Lastname=@Lastname, Email=@Email, Phone=@Phone 
-Gender=@Gender, DateOfBirth=@DateOfBirth, Nationality=@Nationality, DateUpdated=@DateUpdated WHERE Email=@Email AND IsDeleted = @IsDeleted";
+            var queryString = @"UPDATE [User]  set Firstname=@Firstname, Lastname=@Lastname, Email=@Email, Phone=@Phone, 
+Gender=@Gender, DateOfBirth=@DateOfBirth, Nationality=@Nationality, DateUpdated=@DateUpdated OUTPUT inserted.Id WHERE Id=@Id AND IsDeleted = @IsDeleted";
 
             var dbPara = new DynamicParameters();
+            dbPara.Add("Id", userId);
             dbPara.Add("Firstname", userVM.Firstname);
             dbPara.Add("Lastname", userVM.Lastname);
             dbPara.Add("Email", userVM.Email);
@@ -80,14 +117,15 @@ Gender=@Gender, DateOfBirth=@DateOfBirth, Nationality=@Nationality, DateUpdated=
             dbPara.Add("IsDeleted", false);
             dbPara.Add("DateUpdated", DateTime.Now.AddHours(1));
 
-            var response = await _dapperRepository.Execute<UserVM>(queryString, dbPara, commandType: CommandType.Text);
+            var response = await _dapperRepository.Execute<long>(queryString, dbPara, commandType: CommandType.Text);
 
             return response;
+
         }
 
         public async Task<long> DeleteUser(string email)
         {
-            var queryString = @"UPDATE [User] OUTPUT updated.Id set IsDeleted = @IsDeleted, DateUpdated=@DateUpdated WHERE Email=@Email";
+            var queryString = @"UPDATE [User]  set IsDeleted = @IsDeleted, DateUpdated=@DateUpdated OUTPUT inserted.Id WHERE Email=@Email";
 
             var dbPara = new DynamicParameters();
             dbPara.Add("Email", email);

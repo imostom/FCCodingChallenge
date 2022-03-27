@@ -15,11 +15,11 @@ namespace FCCodingChallenge.API.Controllers
         public RemoteDetails _remoteDetails;
         public ILoggerManager _loggerManger;
 
-        public BaseController(RemoteDetails remoteDetails, IHttpContextAccessor httpContext, ILoggerManager loggerManger)
+        public BaseController(RemoteDetails remoteDetails, ILoggerManager loggerManger)
         {
-            _remoteDetails.IpAddress = httpContext.HttpContext.Connection.RemoteIpAddress.ToString();
-            _remoteDetails.Port = httpContext.HttpContext.Connection.RemotePort.ToString();
-            _remoteDetails.ApiKey = httpContext.HttpContext.Request.Headers["ApiKey"];
+            //_remoteDetails.IpAddress = httpContext.HttpContext.Connection.RemoteIpAddress.ToString();
+            //_remoteDetails.Port = httpContext.HttpContext.Connection.RemotePort.ToString();
+            //_remoteDetails.ApiKey = httpContext.HttpContext.Request.Headers["ApiKey"];
             _remoteDetails = remoteDetails;
             _loggerManger = loggerManger;
         }
@@ -27,6 +27,9 @@ namespace FCCodingChallenge.API.Controllers
 
         protected IActionResult CustomResponse<T>(GenericResponse<T> result)
         {
+            if(result == null)
+                return Ok(result);
+
             ResponseCode.TryParse(result.ResponseCode, out ResponseCode myStatus);
             result.ResponseCode = result.ResponseCode.Length > 1 ? result.ResponseCode : '0' + result.ResponseCode;
             _loggerManger.Information($"{result.Caller} Response to: {JsonConvert.SerializeObject(_remoteDetails)} Response Body : {JsonConvert.SerializeObject(result)}");

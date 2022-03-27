@@ -1,10 +1,10 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +14,19 @@ namespace FCCodingChallenge.API.Repository
     public class DapperRepository : IDapperRepository
     {
         private readonly IConfiguration _config;
+        private readonly string _conString;
         private string Connectionstring = "FCreditConnectionString";
 
         public DapperRepository(IConfiguration config)
         {
             _config = config;
         }
+        public DapperRepository(string conString)
+        {
+            _conString = conString;
+        }
+
+
         public void Dispose()
         {
 
@@ -28,6 +35,7 @@ namespace FCCodingChallenge.API.Repository
         public async Task<T> Execute<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
+            //using IDbConnection db = new SqlConnection(!string.IsNullOrEmpty(_conString) ? _conString : _config.GetConnectionString(Connectionstring));
             using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
             try
             {
@@ -63,7 +71,8 @@ namespace FCCodingChallenge.API.Repository
         public async Task<T> Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
             T result;
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = new SqlConnection(!string.IsNullOrEmpty(_conString) ? _conString : _config.GetConnectionString(Connectionstring));
+            //using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
             if (db.State == ConnectionState.Closed)
                 db.Open();
             using (var tran = db.BeginTransaction())

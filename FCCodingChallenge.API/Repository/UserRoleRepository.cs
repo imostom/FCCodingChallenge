@@ -21,8 +21,8 @@ namespace FCCodingChallenge.API.Repository
 
 
             var dbPara = new DynamicParameters();
-            dbPara.Add("Firstname", userId);
-            dbPara.Add("Lastname", roleId);
+            dbPara.Add("UserId", userId);
+            dbPara.Add("RoleId", roleId);
             dbPara.Add("IsDeleted", false);
             dbPara.Add("DateCreated", DateTime.Now.AddHours(1));
             dbPara.Add("DateUpdated", null);
@@ -34,7 +34,7 @@ namespace FCCodingChallenge.API.Repository
 
         public async Task<long> DeleteUserRole(long userId)
         {
-            var queryString = @"UPDATE [UserRoles] OUTPUT updated.Id set IsDeleted = @IsDeleted, DateUpdated=@DateUpdated WHERE UserId=@UserId";
+            var queryString = @"UPDATE [UserRoles]  set IsDeleted = @IsDeleted, DateUpdated=@DateUpdated OUTPUT inserted.Id WHERE UserId=@UserId";
 
             var dbPara = new DynamicParameters();
             dbPara.Add("UserId", userId);
