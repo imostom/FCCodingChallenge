@@ -28,7 +28,7 @@ namespace FCCodingChallenge.API.Controllers
         [Route("user/email/{email}")]
         public async Task<IActionResult> GetUser(string email)
         {
-            var auth = ChannelService.AuthorizeChannel(_remoteDetails.ApiKey);
+            var auth = ChannelService.AuthorizeChannel(_remoteDetails);
             if(!auth)
                 return Unauthorized();
 
@@ -41,7 +41,7 @@ namespace FCCodingChallenge.API.Controllers
         [Route("user/phone/{phone}")]
         public async Task<IActionResult> GetUserByPhone(string phone)
         {
-            var auth = ChannelService.AuthorizeChannel(_remoteDetails.ApiKey);
+            var auth = ChannelService.AuthorizeChannel(_remoteDetails);
             if (!auth)
                 return Unauthorized();
 
@@ -54,7 +54,7 @@ namespace FCCodingChallenge.API.Controllers
         [Route("user")]
         public async Task<IActionResult> AddUser(UserVM userRoleRequest)
         {
-            var auth = ChannelService.AuthorizeChannel(_remoteDetails.ApiKey);
+            var auth = ChannelService.AuthorizeChannel(_remoteDetails);
             if (!auth)
                 return Unauthorized();
 
@@ -67,7 +67,7 @@ namespace FCCodingChallenge.API.Controllers
         [Route("user/{email}")]
         public async Task<IActionResult> DeleteUser(string email)
         {
-            var auth = ChannelService.AuthorizeChannel(_remoteDetails.ApiKey);
+            var auth = ChannelService.AuthorizeChannel(_remoteDetails);
             if (!auth)
                 return Unauthorized();
 
@@ -80,7 +80,7 @@ namespace FCCodingChallenge.API.Controllers
         [Route("user")]
         public async Task<IActionResult> UpdateUser(UserVM userVM)
         {
-            var auth = ChannelService.AuthorizeChannel(_remoteDetails.ApiKey);
+            var auth = ChannelService.AuthorizeChannel(_remoteDetails);
             if (!auth)
                 return Unauthorized();
 

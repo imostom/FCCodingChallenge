@@ -1,0 +1,86 @@
+USE [FCChallenge]
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 3/28/2022 10:44:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[IsDeleted] [bit] NULL,
+ CONSTRAINT [PK_Roles] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 3/28/2022 10:44:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[Firstname] [varchar](50) NOT NULL,
+	[Lastname] [varchar](50) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[Phone] [varchar](20) NULL,
+	[Gender] [varchar](10) NULL,
+	[DateOfBirth] [date] NULL,
+	[Nationality] [varchar](100) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DateCreated] [datetime] NULL,
+	[DateUpdated] [datetime] NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UserRoles]    Script Date: 3/28/2022 10:44:24 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UserRoles](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[UserId] [bigint] NOT NULL,
+	[RoleId] [int] NULL,
+	[IsDeleted] [bit] NULL,
+	[DateCreated] [datetime] NULL,
+	[DateUpdated] [datetime] NULL,
+ CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Roles] ON 
+GO
+INSERT [dbo].[Roles] ([Id], [Name], [IsDeleted]) VALUES (1, N'Customer', 0)
+GO
+INSERT [dbo].[Roles] ([Id], [Name], [IsDeleted]) VALUES (2, N'Admin', 0)
+GO
+SET IDENTITY_INSERT [dbo].[Roles] OFF
+GO
+SET IDENTITY_INSERT [dbo].[User] ON 
+GO
+INSERT [dbo].[User] ([Id], [Firstname], [Lastname], [Email], [Phone], [Gender], [DateOfBirth], [Nationality], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (14, N'Tomiwo', N'Ilori', N'tomi@gmail.com', N'07069388874', N'M', CAST(N'1993-02-21' AS Date), N'Nigerian', 0, CAST(N'2022-03-27T16:42:24.883' AS DateTime), CAST(N'2022-03-27T19:14:53.107' AS DateTime))
+GO
+INSERT [dbo].[User] ([Id], [Firstname], [Lastname], [Email], [Phone], [Gender], [DateOfBirth], [Nationality], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (15, N'Jane', N'Doe', N'janedoe@gmail.com', N'07068098814', N'F', CAST(N'1992-02-21' AS Date), N'Nigerian', 0, CAST(N'2022-03-27T16:58:47.230' AS DateTime), CAST(N'2022-03-27T19:18:46.973' AS DateTime))
+GO
+INSERT [dbo].[User] ([Id], [Firstname], [Lastname], [Email], [Phone], [Gender], [DateOfBirth], [Nationality], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (18, N'Oluwatomiwo', N'Ilori', N'oluwatomiwo@gmail.com', N'07069388874', N'Male', CAST(N'2022-03-01' AS Date), N'American', 0, CAST(N'2022-03-28T01:30:36.363' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[User] OFF
+GO
+SET IDENTITY_INSERT [dbo].[UserRoles] ON 
+GO
+INSERT [dbo].[UserRoles] ([Id], [UserId], [RoleId], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (1, 14, 1, 0, CAST(N'2022-03-27T16:42:28.280' AS DateTime), CAST(N'2022-03-27T19:14:53.090' AS DateTime))
+GO
+INSERT [dbo].[UserRoles] ([Id], [UserId], [RoleId], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (2, 15, 1, 1, CAST(N'2022-03-27T16:58:53.937' AS DateTime), CAST(N'2022-03-27T19:18:46.953' AS DateTime))
+GO
+INSERT [dbo].[UserRoles] ([Id], [UserId], [RoleId], [IsDeleted], [DateCreated], [DateUpdated]) VALUES (5, 18, 1, 0, CAST(N'2022-03-28T01:30:38.123' AS DateTime), NULL)
+GO
+SET IDENTITY_INSERT [dbo].[UserRoles] OFF
+GO
