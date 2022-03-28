@@ -15,12 +15,14 @@ namespace FCCodingChallenge.API.Controllers
         public RemoteDetails _remoteDetails;
         public ILoggerManager _loggerManger;
 
-        public BaseController(RemoteDetails remoteDetails, ILoggerManager loggerManger)
+        public BaseController(RemoteDetails remoteDetails, IHttpContextAccessor httpContext, ILoggerManager loggerManger)
         {
             //_remoteDetails.IpAddress = httpContext.HttpContext.Connection.RemoteIpAddress.ToString();
             //_remoteDetails.Port = httpContext.HttpContext.Connection.RemotePort.ToString();
-            //_remoteDetails.ApiKey = httpContext.HttpContext.Request.Headers["ApiKey"];
+            var key = httpContext.HttpContext.Request.Headers["ApiKey"];
+
             _remoteDetails = remoteDetails;
+            _remoteDetails.ApiKey = key;
             _loggerManger = loggerManger;
         }
 
@@ -45,5 +47,7 @@ namespace FCCodingChallenge.API.Controllers
                     return Ok(result);
             }
         }
+
+      
     }
 }

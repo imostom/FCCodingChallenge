@@ -72,7 +72,7 @@ namespace FCCodingChallenge.API.Repository
                 AND u.IsDeleted=@IsDeleted";
 
             var dbPara = new DynamicParameters();
-            dbPara.Add("Email", phone);
+            dbPara.Add("Phone", phone);
             dbPara.Add("IsDeleted", false);
 
             var response = await _dapperRepository.GetAll<User>(queryString, dbPara, commandType: CommandType.Text);

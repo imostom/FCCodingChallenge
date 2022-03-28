@@ -78,6 +78,33 @@ namespace FCCodingChallenge.Web
         protected global::System.Web.UI.WebControls.Label lbNotificationSuccess;
 
         /// <summary>
+        /// divNotificationInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNotificationInfo;
+
+        /// <summary>
+        /// imgNotificationInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgNotificationInfo;
+
+        /// <summary>
+        /// lbNotificationInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbNotificationInfo;
+
+        /// <summary>
         /// txtFirstname control.
         /// </summary>
         /// <remarks>
@@ -96,13 +123,13 @@ namespace FCCodingChallenge.Web
         protected global::System.Web.UI.WebControls.TextBox txtLastname;
 
         /// <summary>
-        /// txtMiddlename control.
+        /// txtPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMiddlename;
+        protected global::System.Web.UI.WebControls.TextBox txtPhone;
 
         /// <summary>
         /// txtEmail control.
@@ -114,13 +141,40 @@ namespace FCCodingChallenge.Web
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// drpRole control.
+        /// txtDateOfBirth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList drpRole;
+        protected global::System.Web.UI.WebControls.TextBox txtDateOfBirth;
+
+        /// <summary>
+        /// drpGender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpGender;
+
+        /// <summary>
+        /// txtNationality control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNationality;
+
+        /// <summary>
+        /// drpRoles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList drpRoles;
 
         /// <summary>
         /// btnCreateUser control.

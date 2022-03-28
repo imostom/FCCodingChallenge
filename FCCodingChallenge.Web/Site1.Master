@@ -38,20 +38,20 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="Default.aspx">
+                    <a class="nav-link" href="CreateUser.aspx">
                         <i class="fas fa-fw fa-tachometer-alt" runat="server" visible="false"></i>
-                        <span>Home</span></a>
+                        <span>Create User</span></a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="Report.aspx">
+                    <a class="nav-link" href="UserDetails.aspx">
                         <i class="fas fa-fw fa-tachometer-alt" runat="server" visible="false"></i>
-                        <span>Report</span></a>
+                        <span>Search</span></a>
                 </li>
-                <li class="nav-item active">
+              <%--  <li class="nav-item active">
                     <a class="nav-link" href="SubscriberSummary.aspx">
                         <i class="fas fa-fw fa-tachometer-alt" runat="server" visible="false"></i>
                         <span>Subscriber Summary</span></a>
-                </li>
+                </li>--%>
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

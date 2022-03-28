@@ -2,6 +2,7 @@
 using FCCodingChallenge.API.Data;
 using FCCodingChallenge.API.Data.Models;
 using FCCodingChallenge.API.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -17,6 +18,7 @@ namespace FCCodingChallenge.Tests
     public  class UserControllerTests
     {
         private readonly Mock<IUserService> userServiceStub = new ();
+        private readonly IHttpContextAccessor httpServiceStub;
         private readonly Mock<IUserRoleService> userRoleServiceStub = new ();
         private readonly Mock<RemoteDetails> remoteDetailsStub = new ();
         private readonly Mock<ILoggerManager> loggerStub = new ();
@@ -26,7 +28,7 @@ namespace FCCodingChallenge.Tests
             //Arrange
             userServiceStub.Setup(repo => repo.GetUser(It.IsAny<string>())).ReturnsAsync((GenericResponse<User>)null);
 
-            var controller = new UserController(userServiceStub.Object, userRoleServiceStub.Object, remoteDetailsStub.Object, loggerStub.Object);
+            var controller = new UserController(userServiceStub.Object, userRoleServiceStub.Object, httpServiceStub, remoteDetailsStub.Object, loggerStub.Object);
 
             //Act
             var result = await controller.GetUser("stub@gmail.com") as OkObjectResult;
@@ -42,7 +44,7 @@ namespace FCCodingChallenge.Tests
 
             userServiceStub.Setup(repo => repo.GetUser(It.IsAny<string>())).ReturnsAsync(expectedUser);
 
-            var controller = new UserController(userServiceStub.Object, userRoleServiceStub.Object, remoteDetailsStub.Object, loggerStub.Object);
+            var controller = new UserController(userServiceStub.Object, userRoleServiceStub.Object, httpServiceStub, remoteDetailsStub.Object, loggerStub.Object);
 
             //Act
             var result = await controller.GetUser(expectedUser.Data.Email) as OkObjectResult;

@@ -1,3 +1,4 @@
+using FCCodingChallenge.API.Data;
 using FCCodingChallenge.API.Data.Models;
 using FCCodingChallenge.API.Repository;
 using FCCodingChallenge.API.Services;
@@ -54,6 +55,7 @@ namespace FCCodingChallenge.API
             {
                 c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FCCodingChallenge.API", Version = "v1" });
+                c.OperationFilter<RequiredHeaderFilter>();
             });
         }
 

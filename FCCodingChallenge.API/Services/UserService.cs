@@ -3,6 +3,7 @@ using FCCodingChallenge.API.Data.Enum;
 using FCCodingChallenge.API.Data.Models;
 using FCCodingChallenge.API.Data.ViewModels;
 using FCCodingChallenge.API.Repository;
+using FCCodingChallenge.API.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -27,6 +28,8 @@ namespace FCCodingChallenge.API.Services
             string serviceName = "GetUser";
             try
             {
+                
+
                 if (string.IsNullOrEmpty(email))
                     return new GenericResponse<User> { IsSuccessful = false, ResponseCode = ((int)ResponseCode.ValidationError).ToString(), ResponseMessage = $"Empty Parameter Not Allowed", Caller = serviceName };
 
